@@ -344,11 +344,20 @@
                     return;
                 }
                 
-                // Use browser print dialog for full page capture
-                window.print();
+                const opt = {
+                    margin: 10,
+                    filename: "byerim_vegan_renewal_" + new Date().getTime() + ".pdf",
+                    image: { type: "jpeg", quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, allowTaint: true },
+                    jsPDF: { orientation: "portrait", unit: "mm", format: "a4" }
+                };
+                
+                html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
+                    pdf.save(opt.filename);
+                });
             } catch (error) {
-                console.error('Print error:', error);
-                alert('Could not open print dialog.');
+                console.error('PDF error:', error);
+                window.print();
             }
         }
         
