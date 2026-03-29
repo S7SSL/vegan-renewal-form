@@ -344,25 +344,11 @@
                     return;
                 }
                 
-                // Try using html2pdf
-                if (typeof html2pdf !== 'undefined') {
-                    const opt = {
-                        margin: 10,
-                        filename: "byerim_vegan_renewal_" + new Date().getTime() + ".pdf",
-                        image: { type: "jpeg", quality: 0.98 },
-                        html2canvas: { scale: 2 },
-                        jsPDF: { orientation: "portrait", unit: "mm", format: "a4" }
-                    };
-                    html2pdf().set(opt).from(element).save();
-                } else {
-                    // Fallback: use browser print dialog
-                    alert('Opening print dialog. Select "Save as PDF" from printer options.');
-                    window.print();
-                }
-            } catch (error) {
-                console.error('PDF error:', error);
-                alert('Could not generate PDF. Using print dialog instead.');
+                // Use browser print dialog for full page capture
                 window.print();
+            } catch (error) {
+                console.error('Print error:', error);
+                alert('Could not open print dialog.');
             }
         }
         
